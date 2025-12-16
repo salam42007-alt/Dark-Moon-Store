@@ -1,4 +1,4 @@
-// مؤقت حتى تنتقل لخدمة تدعم المتغيرات البيئية
+// أول السطر
 const ADMIN_PASS = '5s5s';
 const AIRTABLE_KEY = 'patgjnyiWudLsnpdT.f222222067b17764c37a758ac0583070af9b84bb92852bdeca221caf6f224553';
 const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
@@ -134,3 +134,4 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
     location.reload();
   }, 2000);
 });
+
