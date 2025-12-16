@@ -1,17 +1,10 @@
-// ===== جلب التوكن من متغير بيئي (GitHub Secrets) =====
-// نستخدم Netlify أو Vercel أو أي خدمة تدعم المتغيرات البيئية
-// اسمه: AIRTABLE_KEY
+// التوكن من المتغير البيئي
 const AIRTABLE_KEY  = import.meta.env.VITE_AIRTABLE_KEY   // Vite / Netlify / Vercel
                    || process.env.AIRTABLE_KEY          // Node / GitHub Actions
-                   || '';                               // fallback فارغ (ما يتعرض في الكود)
+                   || '';                               // fallback فارغ
 
 const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
 const AIRTABLE_TABLE= 'Products';
-
-// إذا ما كان في توكن أوقف التنفيذ
-if (!AIRTABLE_KEY) {
-  console.error('❌ AIRTABLE_KEY غير موجود في المتغيرات البيئية!');
-}
 
 // جلب المنتجات
 fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`,{
@@ -66,12 +59,19 @@ function openOrder(product) {
 // ===== لوحة الإدارة =====
 const ADMIN_PASS = '5s5s';
 
-function promptAdmin() {
-  const pass = prompt('أدخل كلمة المرور:');
+function showPassModal() {
+  document.getElementById('passModal').classList.remove('hidden');
+}
+function closePassModal() {
+  document.getElementById('passModal').classList.add('hidden');
+}
+function checkPass() {
+  const pass = document.getElementById('passInput').value;
   if (pass === ADMIN_PASS) {
+    closePassModal();
     document.getElementById('adminPanel').classList.remove('hidden');
   } else {
-    alert('كلمة مرور خاطئة!');
+    alert('❌ كلمة مرور خاطئة!');
   }
 }
 function closeAdmin() {
