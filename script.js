@@ -6,6 +6,8 @@ const AIRTABLE_KEY  = import.meta.env.VITE_AIRTABLE_KEY   // Vite / Netlify / Ve
 const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
 const AIRTABLE_TABLE= 'Products';
 
+console.log('✅ script.js loaded');
+
 // جلب المنتجات
 fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`,{
   headers: { Authorization: `Bearer ${AIRTABLE_KEY}` }
@@ -117,3 +119,4 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
   closeAdmin();
   location.reload();
 });
+
