@@ -21,7 +21,7 @@ fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`, {
     }));
     renderProducts(list);
   })
-  .catch(err => console.error('خطأ في جلب المنتجات:', err)));
+  .catch(err => console.error('خطأ في جلب المنتجات:', err));
 
 /*========== عرض المنتجات + زر حذف ==========*/
 function renderProducts(list) {
@@ -47,7 +47,6 @@ function renderProducts(list) {
 
 /*========== حذف منتج ==========*/
 function confirmDelete(id, name) {
-  // علبة تأكيد الحذف
   const modal = document.createElement('div');
   modal.className = 'fixed inset-0 bg-black/60 flex items-center justify-center z-50';
   modal.innerHTML = `
@@ -70,13 +69,11 @@ async function deleteProduct(id) {
     alert('❌ كلمة مرور خاطئة!');
     return;
   }
-  // حذف من AirTable
   await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}/${id}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${AIRTABLE_KEY}` }
   });
 
-  // علبة نجاح + ريفريش
   const done = document.createElement('div');
   done.className = 'fixed inset-0 bg-black/60 flex items-center justify-center z-50';
   done.innerHTML = `
@@ -97,7 +94,6 @@ async function deleteProduct(id) {
 
 /*========== تواصل معنا + حوّار خياري ==========*/
 function openOrder(product) {
-  // حوّار داخلي بخيارين
   const modal = document.createElement('div');
   modal.className = 'fixed inset-0 bg-black/60 flex items-center justify-center z-50';
   modal.innerHTML = `
@@ -150,7 +146,7 @@ function selectImage() {
     reader.onload = ev => {
       document.getElementById('image').value = ev.target.result;
     };
-    reader.readAsDataURL(file);
+  reader.readAsDataURL(file);
   };
   input.click();
 }
