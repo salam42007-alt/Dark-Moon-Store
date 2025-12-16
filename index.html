@@ -12,39 +12,43 @@
 
 <!-- Hero -->
 <section id="home" class="relative min-h-screen flex items-center justify-center text-center px-4">
-  <!-- الخلفية الجديدة -->
   <img src="image/35876564.webp" alt="Background" class="absolute inset-0 w-full h-full object-cover -z-10">
   <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-gray-900"></div>
 
   <div class="relative z-10">
     <h1 class="text-5xl md:text-7xl font-black mb-6 text-glow">Dark Moon Store</h1>
     <p class="text-xl md:text-2xl mb-8 text-gray-300">أفضل الأسعار · قبول جميع العملات · دعم 24/7</p>
-    <a href="#products" class="btn-primary">تصفح المنتجات</a>
-    <button onclick="promptAdmin()" class="btn-admin">إضافة منتج</button>
+
+    <!-- أزرار الهيرو -->
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#products" class="btn-primary">تصفح المنتجات</a>
+
+      <!-- زر إضافة منتج مع أنميشن -->
+      <button onclick="showPassModal()" class="btn-admin">
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="sparkle"></span>
+        <span class="plus">+</span>
+        <span class="text">إضافة منتج</span>
+      </button>
+    </div>
   </div>
 </section>
 
-<!-- Products -->
-<section id="products" class="py-20 px-4 bg-green-900/20">
-  <h2 class="text-4xl font-bold text-center mb-12">أشهر الخدمات</h2>
-  <div id="productsGrid" class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-    <!-- يُملأ ديناميكياً -->
+<!-- مودال كلمة المرور (داخل الصفحة) -->
+<div id="passModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+  <div class="bg-gray-800 rounded-xl p-6 w-full max-w-sm mx-4 text-center">
+    <h2 class="text-2xl font-bold mb-4 text-green-400">🔐 كلمة المرور</h2>
+    <input id="passInput" type="password" placeholder="أدخل كلمة المرور" class="px-4 py-2 rounded bg-gray-700 text-white w-full mb-4">
+    <div class="flex gap-2">
+      <button onclick="checkPass()" class="btn-primary w-full">دخول</button>
+      <button onclick="closePassModal()" class="btn-secondary w-full">إلغاء</button>
+    </div>
   </div>
-</section>
+</div>
 
-<!-- Contact -->
-<section class="py-16 px-4 text-center bg-green-900/10">
-  <h2 class="text-3xl font-bold mb-4">واجهة مشكلة أو عندك طلب خاص؟</h2>
-  <p class="text-gray-400 mb-8">تواصل معنا الآن ونرد خلال دقائق</p>
-  <a href="https://discord.com/users/YOUR_DISCORD_ID" target="_blank" class="btn-discord">ديسكورد</a>
-  <a href="https://wa.me/YOUR_PHONE" target="_blank" class="btn-whatsapp">واتساب</a>
-</section>
-
-<footer class="py-8 border-t border-gray-800 text-center text-gray-500 text-sm bg-gray-900">
-  © 2025 Dark Moon Store. جميع الحقوق محفوظة.
-</footer>
-
-<!-- نافذة الإدارة -->
+<!-- نافذة الإدارة (نفسها) -->
 <div id="adminPanel" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
   <div class="bg-green-900 rounded-xl p-6 w-full max-w-md mx-4">
     <h2 class="text-2xl font-bold mb-4">إضافة منتج جديد</h2>
@@ -63,6 +67,23 @@
     </form>
   </div>
 </div>
+
+<!-- الأقسام الأخرى -->
+<section id="products" class="py-20 px-4 bg-green-900/20">
+  <h2 class="text-4xl font-bold text-center mb-12">أشهر الخدمات</h2>
+  <div id="productsGrid" class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"></div>
+</section>
+
+<section class="py-16 px-4 text-center bg-green-900/10">
+  <h2 class="text-3xl font-bold mb-4">واجهة مشكلة أو عندك طلب خاص؟</h2>
+  <p class="text-gray-400 mb-8">تواصل معنا الآن ونرد خلال دقائق</p>
+  <a href="https://discord.com/users/YOUR_DISCORD_ID" target="_blank" class="btn-discord">ديسكورد</a>
+  <a href="https://wa.me/YOUR_PHONE" target="_blank" class="btn-whatsapp">واتساب</a>
+</section>
+
+<footer class="py-8 border-t border-gray-800 text-center text-gray-500 text-sm bg-gray-900">
+  © 2025 Dark Moon Store. جميع الحقوق محفوظة.
+</footer>
 
 <script src="script.js"></script>
 </body>
