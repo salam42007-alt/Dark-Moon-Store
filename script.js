@@ -1,13 +1,17 @@
+// أول سطر
 const ADMIN_PASS = '5s5s';
-// نجلب التوكن من المتغير البيئي فقط
+
+// نجلب التوكن من المتغير البيئي فقط (لا قيمة ظاهرة)
 const AIRTABLE_KEY = process?.env?.AIRTABLE_KEY || '';
 if (!AIRTABLE_KEY) {
   console.error('❌ التوكن غير موجود في المتغيرات البيئية!');
 }
+
 const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
 const AIRTABLE_TABLE= 'Products';
 
 console.log('✅ script.js loaded');
+
 
 // جلب المنتجات
 fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`,{
@@ -120,4 +124,5 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
   closeAdmin();
   location.reload();
 });
+
 
