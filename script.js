@@ -1,8 +1,8 @@
-// التوكن من المتغير البيئي
-const AIRTABLE_KEY  = import.meta.env.VITE_AIRTABLE_KEY   // Vite / Netlify / Vercel
-                   || process.env.AIRTABLE_KEY          // Node / GitHub Actions
-                   || '';                               // fallback فارغ
-
+// نجلب التوكن من المتغير البيئي فقط
+const AIRTABLE_KEY = process?.env?.AIRTABLE_KEY || '';
+if (!AIRTABLE_KEY) {
+  console.error('❌ التوكن غير موجود في المتغيرات البيئية!');
+}
 const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
 const AIRTABLE_TABLE= 'Products';
 
@@ -119,4 +119,3 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
   closeAdmin();
   location.reload();
 });
-
