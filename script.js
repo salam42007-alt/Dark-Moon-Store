@@ -6,10 +6,8 @@ const AIRTABLE_TABLE = 'Products';
 
 console.log('✅ script.js loaded');
 
-
-
-// جلب المنتجات
-fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`,{
+/*========== جلب المنتجات من AirTable ==========*/
+fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`, {
   headers: { Authorization: `Bearer ${AIRTABLE_KEY}` }
 })
   .then(res => res.json())
@@ -25,7 +23,7 @@ fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`,{
   })
   .catch(err => console.error('خطأ في جلب المنتجات:', err));
 
-// عرض المنتجات
+/*========== عرض المنتجات ==========*/
 function renderProducts(list) {
   const grid = document.getElementById('productsGrid');
   grid.innerHTML = '';
@@ -46,10 +44,10 @@ function renderProducts(list) {
   });
 }
 
-// تواصل معنا
+/*========== تواصل معنا ==========*/
 function openOrder(product) {
   const msg = `السلام عليكم، أريد شراء: ${product}`;
-  const discord = `https://discord.com/users/YOUR_DISCORD_ID`;
+  const discord = 'https://discord.com/users/YOUR_DISCORD_ID';
   const whatsapp = `https://wa.me/YOUR_PHONE?text=${encodeURIComponent(msg)}`;
   if (confirm("اختر طريقة التواصل:\n(OK = واتساب | Cancel = ديسكورد)")) {
     window.open(whatsapp, '_blank');
@@ -58,15 +56,10 @@ function openOrder(product) {
   }
 }
 
-// ===== لوحة الإدارة =====
-const ADMIN_PASS = '5s5s';
+/*========== لوحة الإدارة ==========*/
+const showPassModal = () => document.getElementById('passModal').classList.remove('hidden');
+const closePassModal = () => document.getElementById('passModal').classList.add('hidden');
 
-function showPassModal() {
-  document.getElementById('passModal').classList.remove('hidden');
-}
-function closePassModal() {
-  document.getElementById('passModal').classList.add('hidden');
-}
 function checkPass() {
   const pass = document.getElementById('passInput').value;
   if (pass === ADMIN_PASS) {
@@ -76,9 +69,9 @@ function checkPass() {
     alert('❌ كلمة مرور خاطئة!');
   }
 }
-function closeAdmin() {
-  document.getElementById('adminPanel').classList.add('hidden');
-}
+
+const closeAdmin = () => document.getElementById('adminPanel').classList.add('hidden');
+
 function selectImage() {
   const input = document.createElement('input');
   input.type = 'file';
@@ -86,15 +79,13 @@ function selectImage() {
   input.onchange = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    reader.onload = ev => {
-      document.getElementById('image').value = ev.target.result;
-    };
+    reader.onload = ev => document.getElementById('image').value = ev.target.result;
     reader.readAsDataURL(file);
   };
   input.click();
 }
 
-// إضافة منتج إلى AirTable
+/*========== إضافة منتج إلى AirTable ==========*/
 document.getElementById('productForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const product = {
