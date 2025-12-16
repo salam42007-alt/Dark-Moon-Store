@@ -1,3 +1,4 @@
+const ADMIN_PASS = '5s5s';
 // نجلب التوكن من المتغير البيئي فقط
 const AIRTABLE_KEY = process?.env?.AIRTABLE_KEY || '';
 if (!AIRTABLE_KEY) {
@@ -119,3 +120,4 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
   closeAdmin();
   location.reload();
 });
+
