@@ -1,8 +1,60 @@
-// ===== الكود المضاف والمُحدث =====
+// ==========================================================
+// 1) المتغيرات والمفاتيح
+// ==========================================================
+const ADMIN_PASS = '5s5s';
+const AIRTABLE_KEY = 'patgjnyiWudLsnpdT.f222222067b17764c37a758ac0583070af9b84bb92852bdeca221caf6f224553';
+const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
+const AIRTABLE_TABLE = 'Products';
 
-/*========== حذف منتج + علبة حوار داخلية ==========*/
+console.log('✅ script.js loaded');
+
+// ==========================================================
+// 2) جلب المنتجات من AirTable
+// ==========================================================
+fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`, {
+  headers: { Authorization: `Bearer ${AIRTABLE_KEY}` }
+})
+  .then(res => res.json())
+  .then(data => {
+    const list = data.records.map(r => ({
+      id: r.id,
+      name: r.fields.Name,
+      price: r.fields.Price,
+      image: r.fields.Image,
+      desc: r.fields.Description
+    }));
+    renderProducts(list);
+  })
+  .catch(err => console.error('خطأ في جلب المنتجات:', err));
+
+// ==========================================================
+// 3) عرض المنتجات + زر حذف
+// ==========================================================
+function renderProducts(list) {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  list.forEach(p => {
+    grid.innerHTML += `
+      <div class="card">
+        <img src="${p.image}" alt="${p.name}" class="rounded-t-xl">
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2">${p.name}</h3>
+          <p class="text-gray-400 mb-4">${p.desc}</p>
+          <div class="flex items-center justify-between">
+            <span class="text-3xl font-black text-green-400">${p.price}</span>
+            <button onclick="openOrder('${p.name} - ${p.price}')" class="btn-secondary">اطلب الآن</button>
+            <button onclick="confirmDelete('${p.id}','${p.name}')" class="btn-danger">حذف</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// ==========================================================
+// 4) حذف منتج + علبة حوار داخلية
+// ==========================================================
 function confirmDelete(id, name) {
-  // علبة تأكيد الحذف
   const modal = document.createElement('div');
   modal.className = 'fixed inset-0 bg-black/60 flex items-center justify-center z-50';
   modal.innerHTML = `
@@ -56,9 +108,10 @@ async function deleteProduct(id) {
   }, 2000);
 }
 
-/*========== تواصل معنا + حوّار خياري (بدون alert) ==========*/
+// ==========================================================
+// 5) تواصل معنا + حوّار خياري (بدون alert)
+// ==========================================================
 function openOrder(product) {
-  // حوّار داخلي بخيارين (بدلاً من confirm)
   const modal = document.createElement('div');
   modal.className = 'fixed inset-0 bg-black/60 flex items-center justify-center z-50';
   modal.innerHTML = `
@@ -82,7 +135,50 @@ function openContact(type, product) {
   document.querySelector('.fixed.z-50:last-of-type').remove();
 }
 
-/*========== إضافة منتج + علبة حوار داخلية + ريفريش تلقائي (بدون alert) ==========*/
+// ==========================================================
+// 6) لوحة الإدارة + علبة حوار داخلية + ريفريش تلقائي
+// ==========================================================
+function showPassModal() {
+  document.getElementById('passModal').classList.remove('hidden');
+}
+function closePassModal() {
+  document.getElementById('passModal').classList.add('hidden');
+}
+function checkPass() {
+  const pass = document.getElementById('passInput').value;
+  if (pass === ADMIN_PASS) {
+    closePassModal();
+    document.getElementById('adminPanel').classList.remove('hidden');
+  } else {
+    // رسالة داخلية بدلاً من alert
+    const msg = document.createElement('div');
+    msg.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded-lg z-60';
+    msg.textContent = '❌ كلمة مرور خاطئة!';
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 2000);
+  }
+}
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.add('hidden');
+}
+function selectImage() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = ev => {
+      document.getElementById('image').value = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+// ==========================================================
+// 7) إضافة منتج + علبة حوار داخلية + ريفريش تلقائي (بدون alert)
+// ==========================================================
 document.getElementById('productForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
