@@ -5,9 +5,6 @@
 .btn-secondary {
   @apply bg-gray-800 px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition;
 }
-.btn-admin {
-  @apply inline-block bg-green-700 px-6 py-3 rounded-lg font-bold text-lg hover:bg-green-600 transition mr-4;
-}
 .btn-discord {
   @apply inline-flex items-center gap-2 bg-[#5865F2] px-6 py-3 rounded-lg font-bold hover:bg-[#4752C4] transition mx-2;
 }
@@ -16,4 +13,35 @@
 }
 .card {
   @apply bg-green-900/30 rounded-xl overflow-hidden border border-green-700 hover:border-green-500 transition;
+}
+
+/* زر إضافة منتج مع أنميشن */
+.btn-admin {
+  position: relative;
+  @apply inline-flex items-center gap-2 bg-green-700 px-6 py-3 rounded-lg font-bold text-lg hover:bg-green-600 transition overflow-hidden;
+}
+.btn-admin .plus {
+  z-index: 2;
+}
+.btn-admin .text {
+  z-index: 2;
+}
+.btn-admin .sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: sparkle 1.5s infinite;
+}
+.btn-admin .sparkle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.btn-admin .sparkle:nth-child(2) { top: 60%; left: 80%; animation-delay: 0.5s; }
+.btn-admin .sparkle:nth-child(3) { top: 80%; left: 10%; animation-delay: 1s; }
+.btn-admin .sparkle:nth-child(4) { top: 20%; left: 90%; animation-delay: 1.5s; }
+
+@keyframes sparkle {
+  0%   { opacity: 0; transform: scale(1); }
+  50%  { opacity: 1; transform: scale(1.8); }
+  100% { opacity: 0; transform: scale(1); }
 }
