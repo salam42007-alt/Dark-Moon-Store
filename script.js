@@ -21,7 +21,7 @@ fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`, {
     }));
     renderProducts(list);
   })
-  .catch(err => console.error('خطأ في جلب المنتجات:', err));
+  .catch(err => console.error('خطأ في جلب المنتجات:', err)));
 
 /*========== عرض المنتجات + زر حذف ==========*/
 function renderProducts(list) {
@@ -146,7 +146,7 @@ function selectImage() {
     reader.onload = ev => {
       document.getElementById('image').value = ev.target.result;
     };
-  reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   };
   input.click();
 }
