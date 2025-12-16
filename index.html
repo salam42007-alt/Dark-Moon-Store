@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Moon Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-white font-cairo">
+
+<!-- Hero -->
+<section id="home" class="relative min-h-screen flex items-center justify-center text-center px-4">
+  <!-- الخلفية الجديدة -->
+  <img src="image/35876564.webp" alt="Background" class="absolute inset-0 w-full h-full object-cover -z-10">
+  <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-gray-900"></div>
+
+  <div class="relative z-10">
+    <h1 class="text-5xl md:text-7xl font-black mb-6 text-glow">Dark Moon Store</h1>
+    <p class="text-xl md:text-2xl mb-8 text-gray-300">أفضل الأسعار · قبول جميع العملات · دعم 24/7</p>
+    <a href="#products" class="btn-primary">تصفح المنتجات</a>
+    <button onclick="promptAdmin()" class="btn-admin">إضافة منتج</button>
+  </div>
+</section>
+
+<!-- Products -->
+<section id="products" class="py-20 px-4 bg-green-900/20">
+  <h2 class="text-4xl font-bold text-center mb-12">أشهر الخدمات</h2>
+  <div id="productsGrid" class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    <!-- يُملأ ديناميكياً -->
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="py-16 px-4 text-center bg-green-900/10">
+  <h2 class="text-3xl font-bold mb-4">واجهة مشكلة أو عندك طلب خاص؟</h2>
+  <p class="text-gray-400 mb-8">تواصل معنا الآن ونرد خلال دقائق</p>
+  <a href="https://discord.com/users/YOUR_DISCORD_ID" target="_blank" class="btn-discord">ديسكورد</a>
+  <a href="https://wa.me/YOUR_PHONE" target="_blank" class="btn-whatsapp">واتساب</a>
+</section>
+
+<footer class="py-8 border-t border-gray-800 text-center text-gray-500 text-sm bg-gray-900">
+  © 2025 Dark Moon Store. جميع الحقوق محفوظة.
+</footer>
+
+<!-- نافذة الإدارة -->
+<div id="adminPanel" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+  <div class="bg-green-900 rounded-xl p-6 w-full max-w-md mx-4">
+    <h2 class="text-2xl font-bold mb-4">إضافة منتج جديد</h2>
+    <form id="productForm" class="grid gap-4">
+      <input id="name" placeholder="اسم الموقع" class="px-4 py-2 rounded bg-gray-800" required>
+      <textarea id="desc" placeholder="وصف الموقع" class="px-4 py-2 rounded bg-gray-800" rows="2" required></textarea>
+      <input id="price" placeholder="السعر" class="px-4 py-2 rounded bg-gray-800" required>
+      <div class="flex items-center gap-2">
+        <input id="image" placeholder="رابط الصورة" class="px-4 py-2 rounded bg-gray-800 w-full" required>
+        <button type="button" onclick="selectImage()" class="btn-secondary">اختر صورة</button>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="btn-primary w-full">إضافة</button>
+        <button type="button" onclick="closeAdmin()" class="btn-secondary w-full">إغلاق</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

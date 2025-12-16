@@ -1,0 +1,19 @@
+.text-glow { text-shadow: 0 0 20px rgba(46, 204, 113, 0.7); }
+.btn-primary {
+  @apply inline-block bg-gradient-to-r from-green-500 to-green-600 px-8 py-3 rounded-lg font-bold text-lg hover:scale-105 transition;
+}
+.btn-secondary {
+  @apply bg-gray-800 px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition;
+}
+.btn-admin {
+  @apply inline-block bg-green-700 px-6 py-3 rounded-lg font-bold text-lg hover:bg-green-600 transition mr-4;
+}
+.btn-discord {
+  @apply inline-flex items-center gap-2 bg-[#5865F2] px-6 py-3 rounded-lg font-bold hover:bg-[#4752C4] transition mx-2;
+}
+.btn-whatsapp {
+  @apply inline-flex items-center gap-2 bg-[#25D366] px-6 py-3 rounded-lg font-bold hover:bg-[#1ebe5a] transition mx-2;
+}
+.card {
+  @apply bg-green-900/30 rounded-xl overflow-hidden border border-green-700 hover:border-green-500 transition;
+}
