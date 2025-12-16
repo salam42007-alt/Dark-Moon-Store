@@ -1,4 +1,4 @@
-// أول سطر
+// مؤقت حتى تنتقل لخدمة تدعم المتغيرات البيئية
 const ADMIN_PASS = '5s5s';
 const AIRTABLE_KEY = 'patgjnyiWudLsnpdT.f222222067b17764c37a758ac0583070af9b84bb92852bdeca221caf6f224553';
 const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
@@ -6,7 +6,7 @@ const AIRTABLE_TABLE = 'Products';
 
 console.log('✅ script.js loaded');
 
-// جلب المنتجات
+/*========== جلب المنتجات ==========*/
 fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`, {
   headers: { Authorization: `Bearer ${AIRTABLE_KEY}` }
 })
@@ -23,7 +23,7 @@ fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`, {
   })
   .catch(err => console.error('خطأ في جلب المنتجات:', err));
 
-// عرض المنتجات
+/*========== عرض المنتجات ==========*/
 function renderProducts(list) {
   const grid = document.getElementById('productsGrid');
   grid.innerHTML = '';
@@ -44,7 +44,7 @@ function renderProducts(list) {
   });
 }
 
-// تواصل معنا
+/*========== تواصل معنا ==========*/
 function openOrder(product) {
   const msg = `السلام عليكم، أريد شراء: ${product}`;
   const discord = 'https://discord.com/users/YOUR_DISCORD_ID';
@@ -56,7 +56,7 @@ function openOrder(product) {
   }
 }
 
-// ===== لوحة الإدارة =====
+/*========== لوحة الإدارة ==========*/
 function showPassModal() {
   document.getElementById('passModal').classList.remove('hidden');
 }
@@ -90,9 +90,25 @@ function selectImage() {
   input.click();
 }
 
-// إضافة منتج إلى AirTable
+/*========== إضافة منتج + علبة حوار داخلية + ريفريش تلقائي ==========*/
 document.getElementById('productForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  // علبة حوار داخلية بدلاً من رسالة المتصفح
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-black/60 flex items-center justify-center z-50';
+  modal.innerHTML = `
+    <div class="bg-gray-800 rounded-xl p-6 w-72 text-center">
+      <h3 class="text-green-400 text-xl mb-2">✅ تمت الإضافة</h3>
+      <p class="text-gray-300 mb-4">سيتم تحديث الصفحة خلال ثوانٍ...</p>
+      <div class="w-full bg-gray-700 rounded-full h-1.5">
+        <div class="bg-green-500 h-1.5 rounded-full animate-pulse" style="width:100%;animation-duration:2s;"></div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  // إرسال البيانات إلى AirTable
   const product = {
     fields: {
       Name: document.getElementById('name').value.trim(),
@@ -111,7 +127,10 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
     body: JSON.stringify({ records: [product] })
   });
 
-  alert('✅ تمت الإضافة! ريفرش الصفحة لترى المنتج.');
+  // إغلاق لوحة الإدارة + إظهار العلبة + ريفريش بعد 2 ثانية
   closeAdmin();
-  location.reload();
+  setTimeout(() => {
+    modal.remove();
+    location.reload();
+  }, 2000);
 });
