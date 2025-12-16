@@ -1,16 +1,11 @@
-// أول سطر
+// مؤقت حتى تنتقل لخدمة تدعم المتغيرات البيئية
 const ADMIN_PASS = '5s5s';
-
-// نجلب التوكن من المتغير البيئي فقط (لا قيمة ظاهرة)
-const AIRTABLE_KEY = process?.env?.AIRTABLE_KEY || '';
-if (!AIRTABLE_KEY) {
-  console.error('❌ التوكن غير موجود في المتغيرات البيئية!');
-}
-
+const AIRTABLE_KEY = 'patgjnyiWudLsnpdT.f222222067b17764c37a758ac0583070af9b84bb92852bdeca221caf6f224553';
 const AIRTABLE_BASE = 'appaZviSwbVOHSAfX';
-const AIRTABLE_TABLE= 'Products';
+const AIRTABLE_TABLE = 'Products';
 
 console.log('✅ script.js loaded');
+
 
 
 // جلب المنتجات
@@ -124,5 +119,6 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
   closeAdmin();
   location.reload();
 });
+
 
 
