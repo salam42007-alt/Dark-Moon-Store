@@ -120,3 +120,82 @@ function openContact(type, product) {
   window.open(`${links[type]}?text=${encodeURIComponent(msg)}`, '_blank');
   document.querySelector('.fixed.z-50:last-of-type').remove();
 }
+
+/*========== لوحة الإدارة ==========*/
+function showPassModal() {
+  document.getElementById('passModal').classList.remove('hidden');
+}
+function closePassModal() {
+  document.getElementById('passModal').classList.add('hidden');
+}
+function checkPass() {
+  const pass = document.getElementById('passInput').value;
+  if (pass === ADMIN_PASS) {
+    closePassModal();
+    document.getElementById('adminPanel').classList.remove('hidden');
+  } else {
+    alert('❌ كلمة مرور خاطئة!');
+  }
+}
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.add('hidden');
+}
+function selectImage() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = ev => {
+      document.getElementById('image').value = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+/*========== إضافة منتج + علبة حوار داخلية + ريفريش تلقائي ==========*/
+document.getElementById('productForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // علبة حوار داخلية بدلاً من رسالة المتصفح
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-black/60 flex items-center justify-center z-50';
+  modal.innerHTML = `
+    <div class="bg-gray-800 rounded-xl p-6 w-72 text-center">
+      <h3 class="text-green-400 text-xl mb-2">✅ تمت الإضافة</h3>
+      <p class="text-gray-300 mb-4">سيتم تحديث الصفحة خلال ثوانٍ...</p>
+      <div class="w-full bg-gray-700 rounded-full h-1.5">
+        <div class="bg-green-500 h-1.5 rounded-full animate-pulse" style="width:100%;animation-duration:2s;"></div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  // إرسال البيانات إلى AirTable
+  const product = {
+    fields: {
+      Name: document.getElementById('name').value.trim(),
+      Price: document.getElementById('price').value.trim(),
+      Image: document.getElementById('image').value.trim(),
+      Description: document.getElementById('desc').value.trim()
+    }
+  };
+
+  await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${AIRTABLE_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ records: [product] })
+  });
+
+  // إغلاق لوحة الإدارة + إظهار العلبة + ريفريش بعد 2 ثانية
+  closeAdmin();
+  setTimeout(() => {
+    modal.remove();
+    location.reload();
+  }, 2000);
+});
